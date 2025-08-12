@@ -5,13 +5,13 @@ import hashlib
 import logging
 import os
 import time
-from pathlib import Path
-from typing import Dict, Set, Optional
 from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 from threading import Lock
+from typing import Dict, Optional, Set
 
-from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
 
 from .config import Config
 from .converter import VideoConverter
@@ -29,7 +29,7 @@ class FileTracker:
     def get_file_hash(self, file_path: str) -> Optional[str]:
         """Calculate file hash to detect duplicates."""
         try:
-            hash_md5 = hashlib.md5()
+            hash_md5 = hashlib.md5(usedforsecurity=False)
             with open(file_path, "rb") as f:
                 # Read in chunks to handle large files
                 for chunk in iter(lambda: f.read(4096), b""):
