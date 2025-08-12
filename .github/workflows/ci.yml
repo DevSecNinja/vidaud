@@ -10,6 +10,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  COVERAGE_PYTHON_VERSION: "3.12" # Python version to upload coverage from
 
 jobs:
   lint-and-test:
@@ -38,20 +39,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Lint with flake8
-        run: |
-          # Uses .flake8 config file automatically
-          python -m flake8 src/ tests/
-
-      - name: Check formatting with black
-        run: |
-          # Uses pyproject.toml [tool.black] config automatically
-          python -m black --check src/ tests/
-
-      # - name: Security check with safety
-      #   run: |
-      #     python -m safety check
-
       - name: Run unit tests
         run: |
           # Uses pyproject.toml [tool.pytest.ini_options] config automatically
@@ -65,14 +52,14 @@ jobs:
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
-        if: matrix.python-version == '3.12' # Only upload once
+        if: matrix.python-version == env.COVERAGE_PYTHON_VERSION
         with:
           file: ./coverage.xml
           flags: unittests
           name: codecov-umbrella
           fail_ci_if_error: false
 
-  security-scan:
+  lint-and-security-scan:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -91,6 +78,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install bandit[toml]
 
+      - name: Lint with flake8
+        run: |
+          # Uses .flake8 config file automatically
+          python -m flake8 src/ tests/
+
+      - name: Check formatting with black
+        run: |
+          # Uses pyproject.toml [tool.black] config automatically
+          python -m black --check src/ tests/
+
       - name: Security check with bandit
         uses: shundor/python-bandit-scan@v1.0
         with:
@@ -101,7 +98,7 @@ jobs:
 
   docker-build:
     runs-on: ubuntu-latest
-    needs: [lint-and-test, security-scan]
+    needs: [lint-and-test, lint-and-security-scan]
     permissions:
       contents: read
       packages: write
