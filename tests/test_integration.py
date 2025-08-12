@@ -41,13 +41,20 @@ class TestRealVideoConversion:
         try:
             response = requests.get(url, timeout=30)
             response.raise_for_status()
+        except requests.exceptions.Timeout:
+            pytest.skip(f"Timeout while downloading sample file from {url}")
+        except requests.exceptions.ConnectionError:
+            pytest.skip(f"Connection error while downloading sample file from {url}")
+        except requests.exceptions.RequestException as e:
+            pytest.skip(f"Request error while downloading sample file from {url}: {e}")
 
+        try:
             with open(file_path, "wb") as f:
                 f.write(response.content)
 
             return file_path
         except Exception as e:
-            pytest.skip(f"Could not download sample file: {e}")
+            pytest.skip(f"Could not write sample file: {e}")
 
     @pytest.mark.integration
     def test_ffmpeg_wmv_sample_mp3_conversion(self):
@@ -66,6 +73,7 @@ class TestRealVideoConversion:
         converter = VideoConverter(self.config)
 
         # Perform conversion synchronously for testing
+
         async def run_conversion():
             await converter.convert_file(sample_file)
 
