@@ -34,6 +34,7 @@
         "tamasfe.even-better-toml"
       ],
       "settings": {
+        "git.autofetch": true,
         "python.defaultInterpreterPath": "/usr/local/bin/python",
         "python.linting.enabled": true,
         "python.linting.flake8Enabled": true,
