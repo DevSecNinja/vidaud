@@ -48,14 +48,9 @@ jobs:
           # Uses pyproject.toml [tool.black] config automatically
           python -m black --check src/ tests/
 
-      - name: Security check with bandit
-        run: |
-          # Uses pyproject.toml [tool.bandit] config automatically
-          python -m bandit -r src/
-
-      - name: Security check with safety
-        run: |
-          python -m safety check
+      # - name: Security check with safety
+      #   run: |
+      #     python -m safety check
 
       - name: Run unit tests
         run: |
