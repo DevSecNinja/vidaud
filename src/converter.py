@@ -4,12 +4,13 @@ import asyncio
 import logging
 import os
 import tempfile
+import time
 from pathlib import Path
 from typing import Dict
 
-from mutagen.mp3 import MP3
-from mutagen.id3 import TIT2, TPE1, TALB, TRCK
 from mutagen.flac import FLAC
+from mutagen.id3 import ID3, TALB, TIT2, TPE1, TRCK
+from mutagen.mp3 import MP3
 
 from .config import Config
 
@@ -93,8 +94,6 @@ class VideoConverter:
 
     def get_temp_output_path(self, final_output_path: str) -> str:
         """Generate temporary output path for atomic operations (F11)."""
-        import time
-
         path_obj = Path(final_output_path)
         timestamp = int(time.time() * 1000000)  # microsecond precision
         temp_name = f".tmp_{path_obj.stem}_{timestamp}{path_obj.suffix}"
@@ -122,8 +121,6 @@ class VideoConverter:
                         f"Retrying in {wait_time} seconds..."
                     )
                     # Use cancellable sleep - avoid asyncio.sleep in threads
-                    import time
-
                     sleep_start = time.time()
                     while (time.time() - sleep_start) < wait_time:
                         if self.is_cancelled():
@@ -262,8 +259,6 @@ class VideoConverter:
 
     def _embed_mp3_metadata(self, audio_path: str, metadata: Dict[str, str]) -> None:
         """Embed metadata into MP3 file."""
-        from mutagen.id3 import ID3
-
         audio = MP3(audio_path, ID3=ID3)
 
         # Add ID3 tag if it doesn't exist
