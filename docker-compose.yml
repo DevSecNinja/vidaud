@@ -1,0 +1,42 @@
+services:
+  vidaud:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vidaud
+    restart: unless-stopped
+    volumes:
+      # Mount your video source directory (read-only)
+      - /path/to/your/videos:/input:ro
+      # Mount your audio output directory
+      - /path/to/your/audio:/output
+    environment:
+      # Output format: mp3 or flac
+      OUTPUT_FORMAT: mp3
+      
+      # Parallel processing (adjust based on your CPU)
+      MAX_PARALLEL_JOBS: 4
+      
+      # File naming customization
+      FILENAME_PREFIX: ""
+      FILENAME_POSTFIX: ""
+      
+      # Processing settings
+      STABILITY_PERIOD_SECONDS: 30
+      MAX_RETRIES: 3
+      RETRY_DELAY_SECONDS: 60
+      
+      # Logging
+      LOG_LEVEL: INFO
+      
+      # Health check port
+      HEALTH_PORT: 8080
+    ports:
+      # Health check endpoint
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

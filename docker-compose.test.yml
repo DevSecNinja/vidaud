@@ -1,0 +1,41 @@
+services:
+  vidaud:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vidaud-test
+    restart: "no"  # Don't restart for testing
+    volumes:
+      # Mount our test directories
+      - ${COMPOSE_TEST_INPUT:-./docker_test_input}:/input:ro
+      - ${COMPOSE_TEST_OUTPUT:-./docker_test_output}:/output
+    environment:
+      # Output format: mp3 or flac
+      OUTPUT_FORMAT: flac
+      
+      # Parallel processing (adjust based on your CPU)
+      MAX_PARALLEL_JOBS: 2
+      
+      # File naming customization
+      FILENAME_PREFIX: "flac_"
+      FILENAME_POSTFIX: "_lossless"
+      
+      # Processing settings (shorter for testing)
+      STABILITY_PERIOD_SECONDS: 5
+      MAX_RETRIES: 2
+      RETRY_DELAY_SECONDS: 10
+      
+      # Logging
+      LOG_LEVEL: INFO
+      
+      # Health check port
+      HEALTH_PORT: 8080
+    ports:
+      # Health check endpoint
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 2
+      start_period: 20s
