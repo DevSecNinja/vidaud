@@ -1,6 +1,50 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
-  ]
+    "config:base",
+    "docker:enableMajor",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":automergeDigest",
+    ":automergeMinor"
+  ],
+  "timezone": "UTC",
+  "schedule": ["before 6am on Sunday"],
+  "labels": ["dependencies"],
+  "commitMessagePrefix": "chore(deps):",
+  "prHourlyLimit": 10,
+  "prConcurrentLimit": 20,
+  "rangeStrategy": "bump",
+  "bumpVersion": "patch",
+  "packageRules": [
+    {
+      "description": "Auto-merge Python patch updates",
+      "matchDatasources": ["pypi"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    },
+    {
+      "description": "Auto-merge Docker digest updates",
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["digest"],
+      "automerge": true
+    },
+    {
+      "description": "Group Python dependencies",
+      "matchDatasources": ["pypi"],
+      "groupName": "Python dependencies",
+      "schedule": ["before 6am on Sunday"]
+    },
+    {
+      "description": "Group Docker base image updates",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["python"],
+      "groupName": "Docker base images",
+      "schedule": ["before 6am on Sunday"]
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "schedule": ["at any time"]
+  }
 }

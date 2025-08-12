@@ -1,0 +1,84 @@
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers --strict-config"
+testpaths = [
+    "tests",
+]
+python_files = [
+    "test_*.py",
+    "*_test.py",
+]
+python_classes = [
+    "Test*",
+]
+python_functions = [
+    "test_*",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests that require network access",
+    "unit: marks tests as unit tests",
+]
+
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__pycache__/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+skips = ["B101"]  # Skip assert_used test
+
+[tool.black]
+# Target Python versions
+target-version = ['py311', 'py312']
+
+# Maximum line length (same as flake8)
+line-length = 88
+
+# Include file patterns
+include = '\.pyi?$'
+
+# Exclude directories and files
+exclude = '''
+/(
+    \.git
+  | \.pytest_cache
+  | \.venv
+  | venv
+  | env
+  | build
+  | dist
+  | \.egg-info
+  | \.devcontainer
+)/
+'''
+
+# Skip string normalization (preserve quotes)
+skip-string-normalization = false
+
+# Skip magic trailing comma
+skip-magic-trailing-comma = false
+
+# Preview mode (enable unstable features)
+preview = false
+
+# Respect .gitignore
+respect-gitignore = true
