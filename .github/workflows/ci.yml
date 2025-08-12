@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [main, feature/*]
+    branches: [main]
     tags: ["v*"]
   pull_request:
     branches: [main]
@@ -91,7 +91,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install bandit[toml]
 
-      - name: Bandit Security Scan
+      - name: Security check with bandit
         uses: shundor/python-bandit-scan@v1.0
         with:
           path: "src/"
