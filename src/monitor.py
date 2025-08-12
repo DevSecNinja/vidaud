@@ -1,7 +1,6 @@
 """Video file monitoring using inotify for efficient directory watching."""
 
 import asyncio
-import hashlib
 import logging
 import os
 import time
@@ -10,6 +9,7 @@ from pathlib import Path
 from threading import Lock
 from typing import Dict, Optional, Set
 
+import xxhash
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 
@@ -27,14 +27,26 @@ class FileTracker:
         self._lock = Lock()
 
     def get_file_hash(self, file_path: str) -> Optional[str]:
-        """Calculate file hash to detect duplicates."""
+        """Calculate fast file hash using xxhash on first few MB for duplicate detection."""
         try:
-            hash_md5 = hashlib.md5(usedforsecurity=False)
+            # Only hash the first 5MB for speed while maintaining good duplicate detection
+            max_bytes = 5 * 1024 * 1024  # 5MB
+            hasher = xxhash.xxh64()
+            
             with open(file_path, "rb") as f:
-                # Read in chunks to handle large files
+                bytes_read = 0
+                # Read in chunks, but limit total bytes
                 for chunk in iter(lambda: f.read(4096), b""):
-                    hash_md5.update(chunk)
-            return hash_md5.hexdigest()
+                    hasher.update(chunk)
+                    bytes_read += len(chunk)
+                    if bytes_read >= max_bytes:
+                        break
+            
+            # Include file size in hash to distinguish files with same beginning
+            file_size = os.path.getsize(file_path)
+            hasher.update(str(file_size).encode())
+            
+            return hasher.hexdigest()
         except Exception as e:
             logging.getLogger(__name__).warning(f"Failed to hash {file_path}: {e}")
             return None
