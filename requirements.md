@@ -5,7 +5,7 @@
 | Ref | Requirement | MoSCoW Priority | Notes |
 |-----|-------------|-----------------|-------|
 | F1  | Watch mounted volume and nested directories for new video files | **Must** | Use efficient monitoring like `inotify` |
-| F2  | Convert video files to MP3 by default | **Must** | Plex-compatible lossy output |
+| F2  | Convert `mkv`, `webm` and `mp4` video files to `mp3` by default | **Must** | Plex-compatible lossy output |
 | F3  | Support lossless FLAC output | **Must** | Configurable via environment variable |
 | F4  | Maintain original folder structure for output | **Must** | Plex indexing consistency |
 | F5  | Plex-compatible naming for audio files | **Must** | Artist - Track format |
