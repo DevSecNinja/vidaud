@@ -32,7 +32,7 @@ class FileTracker:
             # Only hash the first 5MB for speed while maintaining good duplicate detection
             max_bytes = 5 * 1024 * 1024  # 5MB
             hasher = xxhash.xxh64()
-            
+
             with open(file_path, "rb") as f:
                 bytes_read = 0
                 # Read in chunks, but limit total bytes
@@ -41,11 +41,11 @@ class FileTracker:
                     bytes_read += len(chunk)
                     if bytes_read >= max_bytes:
                         break
-            
+
             # Include file size in hash to distinguish files with same beginning
             file_size = os.path.getsize(file_path)
             hasher.update(str(file_size).encode())
-            
+
             return hasher.hexdigest()
         except Exception as e:
             logging.getLogger(__name__).warning(f"Failed to hash {file_path}: {e}")
