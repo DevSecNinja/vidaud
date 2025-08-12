@@ -1,7 +1,9 @@
 """Test configuration and converter functionality."""
 
 import os
+import shutil
 import tempfile
+
 import pytest
 
 from src.config import Config
@@ -141,6 +143,4 @@ class TestVideoConverter:
 
     def teardown_method(self):
         """Cleanup test environment."""
-        import shutil
-
         shutil.rmtree(self.temp_dir, ignore_errors=True)

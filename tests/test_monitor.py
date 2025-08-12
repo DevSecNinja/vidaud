@@ -2,12 +2,14 @@
 
 import asyncio
 import os
+import shutil
 import tempfile
 import time
+
 import pytest
 
 from src.config import Config
-from src.monitor import VideoMonitor, FileTracker
+from src.monitor import FileTracker, VideoMonitor
 
 
 class TestFileTracker:
@@ -48,8 +50,6 @@ class TestFileTracker:
 
     def teardown_method(self):
         """Cleanup test environment."""
-        import shutil
-
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
 
@@ -130,6 +130,4 @@ class TestVideoMonitor:
 
     def teardown_method(self):
         """Cleanup test environment."""
-        import shutil
-
         shutil.rmtree(self.temp_dir, ignore_errors=True)

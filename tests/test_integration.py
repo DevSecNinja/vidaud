@@ -2,8 +2,10 @@
 
 import asyncio
 import os
+import shutil
 import tempfile
 import time
+
 import pytest
 import requests
 
@@ -64,8 +66,6 @@ class TestRealVideoConversion:
         converter = VideoConverter(self.config)
 
         # Perform conversion synchronously for testing
-        import asyncio
-
         async def run_conversion():
             await converter.convert_file(sample_file)
 
@@ -102,8 +102,6 @@ class TestRealVideoConversion:
         converter = VideoConverter(self.config)
 
         # Perform conversion
-        import asyncio
-
         async def run_conversion():
             await converter.convert_file(sample_file)
 
@@ -207,6 +205,4 @@ class TestRealVideoConversion:
 
     def teardown_method(self):
         """Cleanup test environment."""
-        import shutil
-
         shutil.rmtree(self.temp_dir, ignore_errors=True)
