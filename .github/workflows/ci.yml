@@ -97,7 +97,7 @@ jobs:
           pip install bandit[toml]
 
       - name: Bandit Security Scan
-        uses: shundor/bandit-action@v1
+        uses: shundor/python-bandit-scan@v1.0
         with:
           path: "src/"
           level: low
