@@ -1,4 +1,4 @@
-watchdog==4.0.2
+watchdog==6.0.0
 inotify==0.2.12
 pydub==0.25.1
 mutagen==1.47.0
@@ -12,8 +12,8 @@ requests==2.32.4
 xxhash==3.5.0
 
 # Linting and code quality tools
-flake8==6.1.0
-black==24.10.0
+flake8==7.3.0
+black==25.1.0
 
 # Security scanning tools
 bandit==1.8.6
