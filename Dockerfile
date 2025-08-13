@@ -1,6 +1,23 @@
 # Multi-stage build for smaller final image
 FROM python:3.11-slim AS builder
 
+# Set build-time labels for org.opencontainers specification
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+
+LABEL org.opencontainers.image.title="vidaud - Video to Audio Converter"
+LABEL org.opencontainers.image.description="A Docker-based application that automatically converts video files to audio formats (MP3/FLAC) while preserving metadata and folder structure for Plex compatibility."
+LABEL org.opencontainers.image.authors="DevSecNinja"
+LABEL org.opencontainers.image.vendor="DevSecNinja"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.url="https://github.com/DevSecNinja/vidaud"
+LABEL org.opencontainers.image.source="https://github.com/DevSecNinja/vidaud"
+LABEL org.opencontainers.image.documentation="https://github.com/DevSecNinja/vidaud/blob/main/README.md"
+LABEL org.opencontainers.image.created="${BUILD_DATE}"
+LABEL org.opencontainers.image.revision="${VCS_REF}"
+LABEL org.opencontainers.image.version="${VERSION}"
+
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
@@ -16,6 +33,24 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Final stage
 FROM python:3.11-slim
+
+# Inherit build-time arguments for labels
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+
+# Set final image labels for org.opencontainers specification
+LABEL org.opencontainers.image.title="vidaud - Video to Audio Converter"
+LABEL org.opencontainers.image.description="A Docker-based application that automatically converts video files to audio formats (MP3/FLAC) while preserving metadata and folder structure for Plex compatibility."
+LABEL org.opencontainers.image.authors="DevSecNinja"
+LABEL org.opencontainers.image.vendor="DevSecNinja"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.url="https://github.com/DevSecNinja/vidaud"
+LABEL org.opencontainers.image.source="https://github.com/DevSecNinja/vidaud"
+LABEL org.opencontainers.image.documentation="https://github.com/DevSecNinja/vidaud/blob/main/README.md"
+LABEL org.opencontainers.image.created="${BUILD_DATE}"
+LABEL org.opencontainers.image.revision="${VCS_REF}"
+LABEL org.opencontainers.image.version="${VERSION}"
 
 # Install runtime dependencies
 RUN apt-get update && apt-get install -y \
