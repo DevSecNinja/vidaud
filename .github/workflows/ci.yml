@@ -137,6 +137,15 @@ jobs:
             type=raw,value={{branch}},enable=${{ github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/') }}
           flavor: |
             latest=auto
+          labels: |
+            org.opencontainers.image.title=vidaud - Video to Audio Converter
+            org.opencontainers.image.description=A Docker-based application that automatically converts video files to audio formats (MP3/FLAC) while preserving metadata and folder structure for Plex compatibility.
+            org.opencontainers.image.authors=DevSecNinja
+            org.opencontainers.image.vendor=DevSecNinja
+            org.opencontainers.image.licenses=MIT
+            org.opencontainers.image.url=https://github.com/DevSecNinja/vidaud
+            org.opencontainers.image.source=https://github.com/DevSecNinja/vidaud
+            org.opencontainers.image.documentation=https://github.com/DevSecNinja/vidaud/blob/main/README.md
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -149,11 +158,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: |
-            BUILD_DATE=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
-            VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
-            VCS_REF=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
-            VCS_URL=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.source'] }}
 
       - name: Test Docker image
         run: |
