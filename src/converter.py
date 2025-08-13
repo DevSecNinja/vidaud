@@ -78,7 +78,7 @@ class VideoConverter:
             relative_path = input_path_obj.relative_to(input_dir_obj)
         except ValueError:
             # If input file is not under input_dir, use just the filename
-            relative_path = input_path_obj.name
+            relative_path = Path(input_path_obj.name)
 
         # Change extension and apply prefix/postfix
         output_filename = self.config.get_output_filename(str(relative_path))

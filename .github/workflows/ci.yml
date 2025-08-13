@@ -145,8 +145,6 @@ jobs:
             org.opencontainers.image.title=vidaud - Video to Audio Converter
             org.opencontainers.image.url=https://github.com/DevSecNinja/vidaud
             org.opencontainers.image.vendor=DevSecNinja
-        env:
-          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
