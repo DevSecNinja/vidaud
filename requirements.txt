@@ -1,19 +1,19 @@
-watchdog==4.0.1
-inotify==0.2.10
+watchdog==4.0.2
+inotify==0.2.12
 pydub==0.25.1
 mutagen==1.47.0
-fastapi==0.104.1
-uvicorn==0.24.0
-pydantic==2.6.0
-pytest==7.4.3
-pytest-asyncio==0.21.1
+fastapi==0.116.1
+uvicorn==0.35.0
+pydantic==2.11.7
+pytest==7.4.4
+pytest-asyncio==0.26.0
 pytest-cov==4.1.0
 requests==2.32.4
-xxhash==3.4.1
+xxhash==3.5.0
 
 # Linting and code quality tools
 flake8==6.1.0
-black==24.3.0
+black==24.10.0
 
 # Security scanning tools
 bandit==1.8.6
