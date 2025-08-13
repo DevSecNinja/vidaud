@@ -3,7 +3,6 @@
 import os
 import shutil
 import tempfile
-from pathlib import Path
 from unittest.mock import patch
 
 import pytest
@@ -155,26 +154,31 @@ class TestVideoConverter:
     def test_metadata_extraction_edge_cases(self):
         """Test metadata extraction edge cases."""
         # Test numbered track with various separators
-        metadata = self.converter.extract_metadata_from_filename("/album/02. Track Name.mp4")
+        metadata = self.converter.extract_metadata_from_filename(
+            "/album/02. Track Name.mp4")
         assert metadata["track"] == "02"
         assert metadata["title"] == "Track Name"
 
         # Test numbered track with underscore
-        metadata = self.converter.extract_metadata_from_filename("/album/03_Track Name.mp4")
+        metadata = self.converter.extract_metadata_from_filename(
+            "/album/03_Track Name.mp4")
         assert metadata["track"] == "03"
         assert metadata["title"] == "Track Name"
 
         # Test numbered track with dash
-        metadata = self.converter.extract_metadata_from_filename("/album/04-Track Name.mp4")
+        metadata = self.converter.extract_metadata_from_filename(
+            "/album/04-Track Name.mp4")
         assert metadata["track"] == "04"
         assert metadata["title"] == "Track Name"
 
         # Test single digit track
-        metadata = self.converter.extract_metadata_from_filename("/album/5 Track Name.mp4")
+        metadata = self.converter.extract_metadata_from_filename(
+            "/album/5 Track Name.mp4")
         assert metadata["title"] == "5 Track Name"  # Should NOT extract as track
 
         # Test complex artist - title with multiple dashes
-        metadata = self.converter.extract_metadata_from_filename("/album/Artist Name - Song - Remix.mp4")
+        metadata = self.converter.extract_metadata_from_filename(
+            "/album/Artist Name - Song - Remix.mp4")
         assert metadata["artist"] == "Artist Name"
         assert metadata["title"] == "Song - Remix"
 
@@ -201,7 +205,8 @@ class TestVideoConverter:
         self.config.output_format = "mp3"
         self.config.mp3_bitrate = 192
 
-        cmd = self.converter._build_ffmpeg_command("/input/test.mkv", "/output/test.mp3")
+        cmd = self.converter._build_ffmpeg_command(
+            "/input/test.mkv", "/output/test.mp3")
 
         expected_cmd = [
             "ffmpeg", "-i", "/input/test.mkv", "-y",
@@ -215,7 +220,8 @@ class TestVideoConverter:
         self.config.output_format = "flac"
         self.config.flac_bit_depth = 24
 
-        cmd = self.converter._build_ffmpeg_command("/input/test.mkv", "/output/test.flac")
+        cmd = self.converter._build_ffmpeg_command(
+            "/input/test.mkv", "/output/test.flac")
 
         expected_cmd = [
             "ffmpeg", "-i", "/input/test.mkv", "-y",
@@ -318,7 +324,8 @@ class TestVideoConverter:
         except Exception as e:
             # If mutagen fails due to invalid MP3, that's expected in unit tests
             # The important thing is our code structure is correct
-            assert "not a valid" in str(e).lower() or "unable to determine" in str(e).lower()
+            assert "not a valid" in str(e).lower(
+            ) or "unable to determine" in str(e).lower()
 
     def test_embed_metadata_flac_format(self):
         """Test metadata embedding for FLAC format."""
@@ -343,7 +350,8 @@ class TestVideoConverter:
             self.converter._embed_metadata(flac_file, metadata)
         except Exception as e:
             # If mutagen fails due to invalid FLAC, that's expected in unit tests
-            assert "not a valid" in str(e).lower() or "unable to determine" in str(e).lower()
+            assert "not a valid" in str(e).lower(
+            ) or "unable to determine" in str(e).lower()
 
     def test_embed_metadata_exception_handling(self):
         """Test metadata embedding handles exceptions gracefully."""
