@@ -106,8 +106,6 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-        with:
-          platforms: linux/amd64,linux/arm64
 
       - name: Set lowercase image name
         id: image_name
@@ -147,14 +145,12 @@ jobs:
             org.opencontainers.image.title=vidaud - Video to Audio Converter
             org.opencontainers.image.url=https://github.com/DevSecNinja/vidaud
             org.opencontainers.image.vendor=DevSecNinja
-        env:
-          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: 'linux/amd64,linux/arm64'
+          platforms: ${{ github.event_name == 'pull_request' && 'linux/amd64' || 'linux/amd64,linux/arm64' }}
           push: ${{ github.event_name != 'pull_request' }}
           load: ${{ github.event_name == 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
