@@ -71,7 +71,7 @@ class TestHealthServer:
         server = HealthServer()
 
         # Set a known start time
-        test_start_time = datetime(2025, 1, 1, 12, 0, 0)
+        test_start_time = datetime(2025, 1, 1, 12, 0, 0, tzinfo=UTC)
         server.start_time = test_start_time
 
         # Test different uptime scenarios
