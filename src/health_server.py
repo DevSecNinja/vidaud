@@ -1,11 +1,11 @@
 """Health check server for monitoring application status."""
 
 import logging
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 
+import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-import uvicorn
 
 
 class HealthServer:

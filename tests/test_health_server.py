@@ -2,7 +2,8 @@
 
 import json
 import logging
-from datetime import datetime, timedelta, UTC
+import time
+from datetime import UTC, datetime, timedelta
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
@@ -297,8 +298,6 @@ class TestHealthServerIntegration:
         first_uptime = first_data["uptime_seconds"]
 
         # Wait a tiny bit (this is a unit test, so minimal wait)
-        import time
-
         time.sleep(0.01)
 
         # Get second uptime
