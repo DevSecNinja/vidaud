@@ -188,6 +188,23 @@ The project uses GitHub Actions for automated testing and deployment:
    - CI/CD runs all tests and builds
    - Docker images are built and pushed to ghcr.io
    - GitHub release is created with auto-generated notes
+   - Release notes are automatically categorized (see below)
+
+### Automatic Release Notes
+
+The project uses GitHub's automatic release notes generation with custom categorization configured in `.github/release.yml`. PRs are automatically grouped into the following categories:
+
+- **🚀 Features** - New features and enhancements
+- **🐛 Bug Fixes** - Bug fixes and corrections  
+- **🔒 Security** - Security-related changes
+- **📦 Dependency Updates** - Renovate and dependency updates
+- **🔧 Maintenance** - Refactoring and maintenance tasks
+- **📚 Documentation** - Documentation improvements
+- **⚡ Performance** - Performance optimizations
+- **🧪 Testing** - Test-related changes
+- **🔄 CI/CD** - CI/CD pipeline improvements
+
+The configuration automatically groups Renovate dependency updates under "📦 Dependency Updates" based on the `dependencies` label assigned by Renovate. This keeps dependency updates separate from feature changes in release notes.
 
 ## Architecture
 

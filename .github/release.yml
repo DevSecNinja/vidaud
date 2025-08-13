@@ -1,0 +1,80 @@
+# Configuration for automatically generated release notes
+# See: https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes
+#
+# This configuration works with the Renovate setup in renovate.json to automatically
+# categorize dependency updates under "📦 Dependency Updates" in release notes.
+# Renovate assigns the "dependencies" label to all its PRs, which this config uses
+# for categorization.
+
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+      - duplicate
+      - question
+      - invalid
+      - wontfix
+      - documentation # Exclude pure documentation PRs from main changelog
+    authors:
+      - dependabot
+      - dependabot[bot]
+      - renovate[bot]
+      - github-actions[bot]
+
+  categories:
+    - title: 🚀 Features
+      labels:
+        - feature
+        - enhancement
+        - feat
+
+    - title: 🐛 Bug Fixes  
+      labels:
+        - bug
+        - bugfix
+        - fix
+
+    - title: 🔒 Security
+      labels:
+        - security
+        - vulnerability
+
+    - title: 📦 Dependency Updates
+      labels:
+        - dependencies
+        - deps
+      # This will catch Renovate PRs based on the "dependencies" label
+      # configured in renovate.json
+
+    - title: 🔧 Maintenance
+      labels:
+        - maintenance
+        - refactor
+        - cleanup
+        - chore
+
+    - title: 📚 Documentation
+      labels:
+        - documentation
+        - docs
+
+    - title: ⚡ Performance
+      labels:
+        - performance
+        - optimization
+
+    - title: 🧪 Testing
+      labels:
+        - test
+        - testing
+
+    - title: 🔄 CI/CD
+      labels:
+        - ci
+        - cd
+        - workflow
+        - build
+
+    - title: Other Changes
+      labels:
+        - "*"
