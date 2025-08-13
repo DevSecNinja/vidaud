@@ -137,15 +137,18 @@ jobs:
             type=raw,value={{branch}},enable=${{ github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/') }}
           flavor: |
             latest=auto
-          labels: |
-            org.opencontainers.image.title=vidaud - Video to Audio Converter
+          annotations:
             org.opencontainers.image.description=A Docker-based application that automatically converts video files to audio formats (MP3/FLAC) while preserving metadata and folder structure for Plex compatibility.
+          labels: |
             org.opencontainers.image.authors=DevSecNinja
-            org.opencontainers.image.vendor=DevSecNinja
-            org.opencontainers.image.licenses=MIT
-            org.opencontainers.image.url=https://github.com/DevSecNinja/vidaud
-            org.opencontainers.image.source=https://github.com/DevSecNinja/vidaud
+            org.opencontainers.image.created={{commit_date 'YYYY-MM-DDTHH:mm:ss.SSS[Z]'}}
+            org.opencontainers.image.description=A Docker-based application that automatically converts video files to audio formats (MP3/FLAC) while preserving metadata and folder structure for Plex compatibility.
             org.opencontainers.image.documentation=https://github.com/DevSecNinja/vidaud/blob/main/README.md
+            org.opencontainers.image.licenses=MIT
+            org.opencontainers.image.source=https://github.com/DevSecNinja/vidaud
+            org.opencontainers.image.title=vidaud - Video to Audio Converter
+            org.opencontainers.image.url=https://github.com/DevSecNinja/vidaud
+            org.opencontainers.image.vendor=DevSecNinja
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
