@@ -195,7 +195,7 @@ The project uses GitHub Actions for automated testing and deployment:
 The project uses GitHub's automatic release notes generation with custom categorization configured in `.github/release.yml`. PRs are automatically grouped into the following categories:
 
 - **🚀 Features** - New features and enhancements
-- **🐛 Bug Fixes** - Bug fixes and corrections  
+- **🐛 Bug Fixes** - Bug fixes and corrections
 - **🔒 Security** - Security-related changes
 - **📦 Dependency Updates** - Renovate and dependency updates
 - **🔧 Maintenance** - Refactoring and maintenance tasks
@@ -233,7 +233,7 @@ The configuration automatically groups Renovate dependency updates under "📦 D
 ## Security
 
 - **Non-root execution**: Container runs as UID 1000
-- **Dependency scanning**: Automated security checks with Bandit and Safety
+- **Dependency scanning**: Automated security checks with Bandit
 - **Input validation**: Safe filename handling and path traversal protection
 - **Resource limits**: Configurable processing limits
 
@@ -242,7 +242,7 @@ The configuration automatically groups Renovate dependency updates under "📦 D
 ### Common Development Issues
 
 1. **Tests failing**: Check FFmpeg installation and network connectivity
-2. **Permission errors**: Ensure proper file permissions for input/output directories  
+2. **Permission errors**: Ensure proper file permissions for input/output directories
 3. **Container issues**: Verify Docker daemon is running and accessible
 4. **Linting errors**: Run `make lint-fix` to auto-fix formatting issues
 
