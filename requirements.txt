@@ -3,6 +3,7 @@ inotify==0.2.12
 pydub==0.25.1
 mutagen==1.47.0
 fastapi==0.116.1
+httpx==0.28.1
 uvicorn==0.35.0
 pydantic==2.11.7
 pytest==8.4.1
