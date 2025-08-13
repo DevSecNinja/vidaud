@@ -1,5 +1,6 @@
 # vidaud - Video to Audio Converter
 
+[![CI/CD Pipeline](https://github.com/DevSecNinja/vidaud/actions/workflows/ci.yml/badge.svg)](https://github.com/DevSecNinja/vidaud/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/github/DevSecNinja/vidaud/graph/badge.svg?token=YV0843JC3Z)](https://codecov.io/github/DevSecNinja/vidaud)
 
 A Docker-based application that automatically converts video files to audio formats (MP3/FLAC) while preserving metadata and folder structure for Plex compatibility.
