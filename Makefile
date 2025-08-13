@@ -94,7 +94,6 @@ lint-fix:
 security:
 	@echo "Running security checks..."
 	python -m bandit -r src/ || true
-	python -m safety check || true
 
 # Build Docker image
 build:

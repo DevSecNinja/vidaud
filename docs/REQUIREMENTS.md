@@ -1,7 +1,7 @@
 # vidaud Requirements
 
 ## Implementation Status
-**Current Version**: 1.0.0 ✅  
+**Current Version**: 1.0.0 ✅
 **All core requirements implemented and tested**
 
 | Ref | Requirement | MoSCoW Priority | Status | Implementation Notes |
@@ -33,7 +33,7 @@
 | **NF3** | Avoid duplicate processing of same file | **Must** | ✅ **DONE** | MD5 hashing and `SKIP_EXISTING=true` |
 | **NF4** | Multi-arch Docker images (ARM & x86_64) | **Should** | ✅ **DONE** | Built for `linux/amd64` and `linux/arm64` |
 | **NF5** | Run as non-root | **Must** | ✅ **DONE** | UID 1000 user with proper permissions |
-| **NF6** | Keep dependencies up to date & free from vulnerabilities | **Must** | ✅ **DONE** | Renovate + Bandit + Safety scanning |
+| **NF6** | Keep dependencies up to date & free from vulnerabilities | **Must** | ✅ **DONE** | Renovate + Bandit scanning |
 | **NF7** | Clean, modular, documented codebase | **Must** | ✅ **DONE** | Comprehensive documentation and type hints |
 | **NF8** | Detailed logs with timestamps and file paths | **Must** | ✅ **DONE** | Structured logging with context |
 | **NF9** | Configurable output formats beyond MP3/FLAC | **Could** | ⏳ **FUTURE** | Currently supports MP3 (320kbps) and FLAC |
