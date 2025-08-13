@@ -1,7 +1,7 @@
 """Health check server for monitoring application status."""
 
 import logging
-from datetime import datetime
+from datetime import datetime, UTC
 
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
@@ -15,7 +15,7 @@ class HealthServer:
         self.port = port
         self.logger = logging.getLogger(__name__)
         self.app = FastAPI(title="vidaud Health Check")
-        self.start_time = datetime.utcnow()
+        self.start_time = datetime.now(UTC)
 
         # Setup routes
         self.app.get("/health")(self.health_check)
@@ -26,19 +26,19 @@ class HealthServer:
         return JSONResponse(
             {
                 "status": "healthy",
-                "timestamp": datetime.utcnow().isoformat(),
-                "uptime_seconds": (datetime.utcnow() - self.start_time).total_seconds(),
+                "timestamp": datetime.now(UTC).isoformat(),
+                "uptime_seconds": (datetime.now(UTC) - self.start_time).total_seconds(),
             }
         )
 
     async def metrics(self) -> JSONResponse:
         """Basic metrics endpoint (NF12)."""
-        uptime = datetime.utcnow() - self.start_time
+        uptime = datetime.now(UTC) - self.start_time
 
         metrics_data = {
             "uptime_seconds": uptime.total_seconds(),
             "start_time": self.start_time.isoformat(),
-            "current_time": datetime.utcnow().isoformat(),
+            "current_time": datetime.now(UTC).isoformat(),
             "status": "running",
         }
 
