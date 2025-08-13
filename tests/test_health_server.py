@@ -125,7 +125,7 @@ class TestHealthServer:
         server = HealthServer()
 
         # Mock the start time
-        test_start_time = datetime(2025, 1, 1, 12, 0, 0)
+        test_start_time = datetime(2025, 1, 1, 12, 0, 0, tzinfo=UTC)
         server.start_time = test_start_time
 
         with patch("src.health_server.datetime") as mock_datetime:
