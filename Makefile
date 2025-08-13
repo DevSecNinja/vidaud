@@ -1,4 +1,4 @@
-.PHONY: help build test run clean setup deps lint lint-fix security health test-docker
+.PHONY: help build build-optimized analyze-docker test run clean setup deps deps-prod lint lint-fix security health test-docker
 
 # Default target
 help:
@@ -7,7 +7,8 @@ help:
 	@echo ""
 	@echo "Available targets:"
 	@echo "  setup     - Initial project setup"
-	@echo "  deps      - Install Python dependencies"
+	@echo "  deps      - Install Python dependencies (dev + prod)"
+	@echo "  deps-prod - Install production dependencies only"
 	@echo "  test      - Run all tests with coverage"
 	@echo "  test-unit - Run unit tests only (no network)"
 	@echo "  test-integration - Run integration tests (requires network)"
@@ -16,6 +17,8 @@ help:
 	@echo "  lint-fix  - Fix code formatting issues"
 	@echo "  security  - Run security checks"
 	@echo "  build     - Build Docker image"
+	@echo "  build-optimized - Build optimized Docker image"
+	@echo "  analyze-docker - Analyze Docker image size optimizations"
 	@echo "  run       - Run with docker-compose"
 	@echo "  health    - Check application health status"
 	@echo "  clean     - Clean up containers and images"
@@ -31,6 +34,11 @@ setup:
 deps:
 	@echo "Installing Python dependencies..."
 	pip install -r requirements.txt
+
+# Install only production dependencies
+deps-prod:
+	@echo "Installing production dependencies only..."
+	pip install -r requirements-prod.txt
 
 # Run tests
 test:
@@ -100,6 +108,16 @@ security:
 build:
 	@echo "Building Docker image..."
 	docker build -t vidaud:latest .
+
+# Build optimized Docker image
+build-optimized:
+	@echo "Building optimized Docker image..."
+	docker build -t vidaud:optimized -f Dockerfile.optimized .
+
+# Analyze Docker image size
+analyze-docker:
+	@echo "Analyzing Docker image size optimizations..."
+	./analyze_docker_size.sh
 
 # Build multi-arch image
 build-multi:

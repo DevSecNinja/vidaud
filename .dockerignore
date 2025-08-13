@@ -1,0 +1,95 @@
+# Git and version control
+.git/
+.gitignore
+.github/
+
+# Documentation
+README.md
+CHANGELOG.md
+docs/
+*.md
+
+# Development and testing
+tests/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+*$py.class
+.coverage
+.coverage.*
+htmlcov/
+cover/
+.tox/
+.nox/
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Temporary files
+*.tmp
+.tmp_*
+temp/
+tmp/
+
+# Test input/output directories
+test_input/
+test_output/
+docker_test_input/
+docker_test_output/
+
+# Development configuration
+.env.example
+.flake8
+pyproject.toml
+renovate.json
+
+# Security reports
+bandit-report.json
+safety-report.json
+
+# Docker files (to avoid infinite loops)
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Makefile and setup scripts (not needed in container)
+Makefile
+setup.sh
+
+# Container-specific ignores
+*.log
+.devcontainer/
