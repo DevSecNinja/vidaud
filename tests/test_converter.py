@@ -155,30 +155,35 @@ class TestVideoConverter:
         """Test metadata extraction edge cases."""
         # Test numbered track with various separators
         metadata = self.converter.extract_metadata_from_filename(
-            "/album/02. Track Name.mp4")
+            "/album/02. Track Name.mp4"
+        )
         assert metadata["track"] == "02"
         assert metadata["title"] == "Track Name"
 
         # Test numbered track with underscore
         metadata = self.converter.extract_metadata_from_filename(
-            "/album/03_Track Name.mp4")
+            "/album/03_Track Name.mp4"
+        )
         assert metadata["track"] == "03"
         assert metadata["title"] == "Track Name"
 
         # Test numbered track with dash
         metadata = self.converter.extract_metadata_from_filename(
-            "/album/04-Track Name.mp4")
+            "/album/04-Track Name.mp4"
+        )
         assert metadata["track"] == "04"
         assert metadata["title"] == "Track Name"
 
         # Test single digit track
         metadata = self.converter.extract_metadata_from_filename(
-            "/album/5 Track Name.mp4")
+            "/album/5 Track Name.mp4"
+        )
         assert metadata["title"] == "5 Track Name"  # Should NOT extract as track
 
         # Test complex artist - title with multiple dashes
         metadata = self.converter.extract_metadata_from_filename(
-            "/album/Artist Name - Song - Remix.mp4")
+            "/album/Artist Name - Song - Remix.mp4"
+        )
         assert metadata["artist"] == "Artist Name"
         assert metadata["title"] == "Song - Remix"
 
@@ -206,12 +211,20 @@ class TestVideoConverter:
         self.config.mp3_bitrate = 192
 
         cmd = self.converter._build_ffmpeg_command(
-            "/input/test.mkv", "/output/test.mp3")
+            "/input/test.mkv", "/output/test.mp3"
+        )
 
         expected_cmd = [
-            "ffmpeg", "-i", "/input/test.mkv", "-y",
-            "-acodec", "libmp3lame", "-b:a", "192k",
-            "-vn", "/output/test.mp3"
+            "ffmpeg",
+            "-i",
+            "/input/test.mkv",
+            "-y",
+            "-acodec",
+            "libmp3lame",
+            "-b:a",
+            "192k",
+            "-vn",
+            "/output/test.mp3",
         ]
         assert cmd == expected_cmd
 
@@ -221,12 +234,20 @@ class TestVideoConverter:
         self.config.flac_bit_depth = 24
 
         cmd = self.converter._build_ffmpeg_command(
-            "/input/test.mkv", "/output/test.flac")
+            "/input/test.mkv", "/output/test.flac"
+        )
 
         expected_cmd = [
-            "ffmpeg", "-i", "/input/test.mkv", "-y",
-            "-acodec", "flac", "-sample_fmt", "s24",
-            "-vn", "/output/test.flac"
+            "ffmpeg",
+            "-i",
+            "/input/test.mkv",
+            "-y",
+            "-acodec",
+            "flac",
+            "-sample_fmt",
+            "s24",
+            "-vn",
+            "/output/test.flac",
         ]
         assert cmd == expected_cmd
 
@@ -267,19 +288,19 @@ class TestVideoConverter:
         """Test conversion skips existing output files when configured."""
         # Create a test input file
         input_file = os.path.join(self.temp_dir, "test.mkv")
-        with open(input_file, 'w') as f:
+        with open(input_file, "w") as f:
             f.write("fake video content")
 
         # Create the expected output file
         output_file = os.path.join(self.temp_dir, "test.mp3")
-        with open(output_file, 'w') as f:
+        with open(output_file, "w") as f:
             f.write("fake audio content")
 
         # Configure to skip existing files
         self.config.skip_existing = True
 
         # Mock the logger to capture the skip message
-        with patch.object(self.converter.logger, 'info') as mock_logger:
+        with patch.object(self.converter.logger, "info") as mock_logger:
             await self.converter.convert_file(input_file)
             mock_logger.assert_called_with(f"Skipping existing file: {output_file}")
 
@@ -288,14 +309,14 @@ class TestVideoConverter:
         """Test conversion stops when cancelled early."""
         # Create a test input file
         input_file = os.path.join(self.temp_dir, "test.mkv")
-        with open(input_file, 'w') as f:
+        with open(input_file, "w") as f:
             f.write("fake video content")
 
         # Cancel the converter before starting
         self.converter.cancel()
 
         # Mock the logger to capture the cancellation message
-        with patch.object(self.converter.logger, 'info') as mock_logger:
+        with patch.object(self.converter.logger, "info") as mock_logger:
             await self.converter.convert_file(input_file)
             mock_logger.assert_called_with(f"Conversion cancelled for {input_file}")
 
@@ -305,16 +326,16 @@ class TestVideoConverter:
         mp3_file = os.path.join(self.temp_dir, "test.mp3")
 
         # Create a minimal MP3 file (just header)
-        with open(mp3_file, 'wb') as f:
+        with open(mp3_file, "wb") as f:
             # Write MP3 header (simplified)
-            f.write(b'\xff\xfb\x90\x00')  # Basic MP3 frame header
+            f.write(b"\xff\xfb\x90\x00")  # Basic MP3 frame header
 
         self.config.output_format = "mp3"
         metadata = {
             "title": "Test Song",
             "artist": "Test Artist",
             "album": "Test Album",
-            "track": "1"
+            "track": "1",
         }
 
         # Test that it doesn't raise an exception
@@ -324,8 +345,10 @@ class TestVideoConverter:
         except Exception as e:
             # If mutagen fails due to invalid MP3, that's expected in unit tests
             # The important thing is our code structure is correct
-            assert "not a valid" in str(e).lower(
-            ) or "unable to determine" in str(e).lower()
+            assert (
+                "not a valid" in str(e).lower()
+                or "unable to determine" in str(e).lower()
+            )
 
     def test_embed_metadata_flac_format(self):
         """Test metadata embedding for FLAC format."""
@@ -333,16 +356,16 @@ class TestVideoConverter:
         flac_file = os.path.join(self.temp_dir, "test.flac")
 
         # Create a minimal FLAC file (just header)
-        with open(flac_file, 'wb') as f:
+        with open(flac_file, "wb") as f:
             # Write FLAC header
-            f.write(b'fLaC')  # FLAC signature
+            f.write(b"fLaC")  # FLAC signature
 
         self.config.output_format = "flac"
         metadata = {
             "title": "Test Song",
             "artist": "Test Artist",
             "album": "Test Album",
-            "track": "1"
+            "track": "1",
         }
 
         # Test that it doesn't raise an exception
@@ -350,8 +373,10 @@ class TestVideoConverter:
             self.converter._embed_metadata(flac_file, metadata)
         except Exception as e:
             # If mutagen fails due to invalid FLAC, that's expected in unit tests
-            assert "not a valid" in str(e).lower(
-            ) or "unable to determine" in str(e).lower()
+            assert (
+                "not a valid" in str(e).lower()
+                or "unable to determine" in str(e).lower()
+            )
 
     def test_embed_metadata_exception_handling(self):
         """Test metadata embedding handles exceptions gracefully."""
@@ -360,7 +385,7 @@ class TestVideoConverter:
         metadata = {"title": "Test"}
 
         # Mock the logger to capture the warning
-        with patch.object(self.converter.logger, 'warning') as mock_warning:
+        with patch.object(self.converter.logger, "warning") as mock_warning:
             # Should not raise exception, just log warning
             self.converter._embed_metadata(nonexistent_file, metadata)
             mock_warning.assert_called_once()
