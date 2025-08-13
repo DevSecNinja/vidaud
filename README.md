@@ -1,5 +1,7 @@
 # vidaud - Video to Audio Converter
 
+[![codecov](https://codecov.io/github/DevSecNinja/vidaud/graph/badge.svg?token=YV0843JC3Z)](https://codecov.io/github/DevSecNinja/vidaud)
+
 A Docker-based application that automatically converts video files to audio formats (MP3/FLAC) while preserving metadata and folder structure for Plex compatibility.
 
 ## ✨ Features
@@ -120,12 +122,12 @@ docker logs -f vidaud
 The application intelligently extracts metadata from filenames and folder structures:
 
 - **`Artist - Title.mp4`** → Artist and Title metadata
-- **`01 - Song Title.mp4`** → Track number and Title metadata  
+- **`01 - Song Title.mp4`** → Track number and Title metadata
 - **`/Artist/Album/Song.mp4`** → Artist, Album, and Title metadata
 
 ## 🎯 Supported Formats
 
-**Input:** MKV, WebM, MP4, AVI, MOV, WMV  
+**Input:** MKV, WebM, MP4, AVI, MOV, WMV
 **Output:** MP3 (320kbps, 44.1kHz) or FLAC (lossless)
 
 ## 🔧 Troubleshooting
@@ -164,7 +166,7 @@ docker run -d \
 ## 📚 Documentation
 
 - **[Configuration Reference](docs/CONFIGURATION.md)** - Complete configuration options and examples
-- **[Contributing Guide](docs/CONTRIBUTING.md)** - Development setup and guidelines  
+- **[Contributing Guide](docs/CONTRIBUTING.md)** - Development setup and guidelines
 - **[Code Quality](docs/code-quality.md)** - Development tools and standards
 
 ## 🤝 Contributing
