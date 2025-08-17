@@ -122,20 +122,11 @@ class TestPythonVersionConsistency:
         assert gh_actions_manager is not None, "Should have GitHub Actions Python version manager"
         assert ".github/workflows/" in str(gh_actions_manager["fileMatch"]), "Should match workflow files"
         
-        # Check for pyproject.toml manager
-        pyproject_manager = None
+        # Check for Dockerfile manager
+        dockerfile_manager = None
         for manager in regex_managers:
-            if "pyproject.toml" in manager.get("description", ""):
-                pyproject_manager = manager
+            if "Dockerfile" in manager.get("description", ""):
+                dockerfile_manager = manager
                 break
                 
-        assert pyproject_manager is not None, "Should have pyproject.toml Python version manager"
-        
-        # Check for DevContainer manager  
-        devcontainer_manager = None
-        for manager in regex_managers:
-            if "DevContainer" in manager.get("description", ""):
-                devcontainer_manager = manager
-                break
-                
-        assert devcontainer_manager is not None, "Should have DevContainer Python version manager"
+        assert dockerfile_manager is not None, "Should have Dockerfile Python version manager"
