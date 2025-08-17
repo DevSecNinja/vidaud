@@ -79,33 +79,19 @@
       "description": "Update Python versions in GitHub Actions workflows",
       "fileMatch": ["^\\.github/workflows/.+\\.ya?ml$"],
       "matchStrings": [
-        "python-version:\\s*(?<quote>[\"']?)(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)\\k<quote>",
-        "python-version:\\s*\\[(?<quote>[\"']?)(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)\\k<quote>(?:,\\s*[\"']?\\d+\\.\\d+(?:\\.\\d+)?[\"']?)*\\]"
+        "python-version:\\s*[\"'](?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)[\"']"
       ],
       "depNameTemplate": "python",
-      "datasourceTemplate": "docker",
-      "versioningTemplate": "docker"
+      "datasourceTemplate": "docker"
     },
     {
-      "description": "Update Python versions in pyproject.toml Black configuration",
-      "fileMatch": ["^pyproject\\.toml$"],
+      "description": "Update Python versions in Dockerfile",
+      "fileMatch": ["^Dockerfile$"],
       "matchStrings": [
-        "target-version\\s*=\\s*\\[(?:[\"']py(?<currentValue>\\d{2,3})[\"'](?:,\\s*)?)+\\]"
+        "FROM python:(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)-slim"
       ],
       "depNameTemplate": "python",
-      "datasourceTemplate": "docker",
-      "versioningTemplate": "docker",
-      "extractVersionTemplate": "^py(?<version>\\d)(?<minor>\\d{1,2})$"
-    },
-    {
-      "description": "Update Python versions in DevContainer images",
-      "fileMatch": ["^\\.devcontainer/devcontainer\\.json$"],
-      "matchStrings": [
-        "\"image\":\\s*\"[^:]+:(?<currentValue>\\d+-\\d+\\.\\d+(?:\\.\\d+)?)[^\"]*\""
-      ],
-      "depNameTemplate": "mcr.microsoft.com/devcontainers/python",
-      "datasourceTemplate": "docker",
-      "versioningTemplate": "docker"
+      "datasourceTemplate": "docker"
     }
   ],
   "vulnerabilityAlerts": {
