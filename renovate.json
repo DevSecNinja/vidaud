@@ -63,6 +63,49 @@
       "schedule": [
         "before 6am on Sunday"
       ]
+    },
+    {
+      "description": "Python version updates across project",
+      "matchDatasources": ["docker", "github-actions"],
+      "matchPackageNames": ["python", "actions/setup-python"],
+      "groupName": "Python version updates",
+      "schedule": ["before 6am on Sunday"],
+      "automerge": false,
+      "reviewersFromCodeOwners": true
+    }
+  ],
+  "regexManagers": [
+    {
+      "description": "Update Python versions in GitHub Actions workflows",
+      "fileMatch": ["^\\.github/workflows/.+\\.ya?ml$"],
+      "matchStrings": [
+        "python-version:\\s*(?<quote>[\"']?)(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)\\k<quote>",
+        "python-version:\\s*\\[(?<quote>[\"']?)(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)\\k<quote>(?:,\\s*[\"']?\\d+\\.\\d+(?:\\.\\d+)?[\"']?)*\\]"
+      ],
+      "depNameTemplate": "python",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
+    },
+    {
+      "description": "Update Python versions in pyproject.toml Black configuration",
+      "fileMatch": ["^pyproject\\.toml$"],
+      "matchStrings": [
+        "target-version\\s*=\\s*\\[(?:[\"']py(?<currentValue>\\d{2,3})[\"'](?:,\\s*)?)+\\]"
+      ],
+      "depNameTemplate": "python",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker",
+      "extractVersionTemplate": "^py(?<version>\\d)(?<minor>\\d{1,2})$"
+    },
+    {
+      "description": "Update Python versions in DevContainer images",
+      "fileMatch": ["^\\.devcontainer/devcontainer\\.json$"],
+      "matchStrings": [
+        "\"image\":\\s*\"[^:]+:(?<currentValue>\\d+-\\d+\\.\\d+(?:\\.\\d+)?)[^\"]*\""
+      ],
+      "depNameTemplate": "mcr.microsoft.com/devcontainers/python",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
     }
   ],
   "vulnerabilityAlerts": {
