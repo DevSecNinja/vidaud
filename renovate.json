@@ -76,10 +76,28 @@
   ],
   "regexManagers": [
     {
+      "description": "Update PYTHON_VERSION in GitHub Actions workflows",
+      "fileMatch": ["^\\.github/workflows/.+\\.ya?ml$"],
+      "matchStrings": [
+        "PYTHON_VERSION:\\s*[\"'](?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)[\"']"
+      ],
+      "depNameTemplate": "python",
+      "datasourceTemplate": "docker"
+    },
+    {
       "description": "Update Python versions in GitHub Actions workflows",
       "fileMatch": ["^\\.github/workflows/.+\\.ya?ml$"],
       "matchStrings": [
         "python-version:\\s*[\"'](?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)[\"']"
+      ],
+      "depNameTemplate": "python",
+      "datasourceTemplate": "docker"
+    },
+    {
+      "description": "Update Python versions in testing matrix",
+      "fileMatch": ["^\\.github/workflows/.+\\.ya?ml$"],
+      "matchStrings": [
+        "python-version:\\s*\\[\\s*[\"'](?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)[\"']"
       ],
       "depNameTemplate": "python",
       "datasourceTemplate": "docker"
