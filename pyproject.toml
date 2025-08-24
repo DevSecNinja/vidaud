@@ -48,7 +48,7 @@ skips = ["B101"]  # Skip assert_used test
 
 [tool.black]
 # Target Python versions
-target-version = ['py311', 'py312']
+target-version = ['py312', 'py313']
 
 # Maximum line length (same as flake8)
 line-length = 88
