@@ -1,5 +1,5 @@
 # Multi-stage build for smaller final image
-FROM python:3.13-slim AS builder
+FROM python:3.13.7-slim AS builder
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
@@ -15,7 +15,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Final stage
-FROM python:3.13-slim
+FROM python:3.13.7-slim
 
 # Install runtime dependencies
 RUN apt-get update && apt-get install -y \
