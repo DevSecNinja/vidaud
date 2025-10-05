@@ -2,15 +2,15 @@ watchdog==6.0.0
 inotify==0.2.12
 pydub==0.25.1
 mutagen==1.47.0
-fastapi==0.117.1
+fastapi==0.118.0
 httpx==0.28.1
 uvicorn==0.37.0
-pydantic==2.11.9
+pydantic==2.11.10
 pytest==8.4.2
 pytest-asyncio==1.2.0
 pytest-cov==6.3.0
 requests==2.32.5
-xxhash==3.5.0
+xxhash==3.6.0
 
 # Linting and code quality tools
 flake8==7.3.0
