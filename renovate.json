@@ -63,6 +63,53 @@
       "schedule": [
         "before 6am on Sunday"
       ]
+    },
+    {
+      "description": "Python version updates across project",
+      "matchDatasources": ["docker", "github-actions"],
+      "matchPackageNames": ["python", "actions/setup-python"],
+      "groupName": "Python version updates",
+      "schedule": ["before 6am on Sunday"],
+      "automerge": false,
+      "reviewersFromCodeOwners": true
+    }
+  ],
+  "regexManagers": [
+    {
+      "description": "Update PYTHON_VERSION in GitHub Actions workflows",
+      "fileMatch": ["^\\.github/workflows/.+\\.ya?ml$"],
+      "matchStrings": [
+        "PYTHON_VERSION:\\s*[\"'](?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)[\"']"
+      ],
+      "depNameTemplate": "python",
+      "datasourceTemplate": "docker"
+    },
+    {
+      "description": "Update Python versions in GitHub Actions workflows",
+      "fileMatch": ["^\\.github/workflows/.+\\.ya?ml$"],
+      "matchStrings": [
+        "python-version:\\s*[\"'](?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)[\"']"
+      ],
+      "depNameTemplate": "python",
+      "datasourceTemplate": "docker"
+    },
+    {
+      "description": "Update Python versions in testing matrix",
+      "fileMatch": ["^\\.github/workflows/.+\\.ya?ml$"],
+      "matchStrings": [
+        "python-version:\\s*\\[\\s*[\"'](?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)[\"']"
+      ],
+      "depNameTemplate": "python",
+      "datasourceTemplate": "docker"
+    },
+    {
+      "description": "Update Python versions in Dockerfile",
+      "fileMatch": ["^Dockerfile$"],
+      "matchStrings": [
+        "FROM python:(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)-slim"
+      ],
+      "depNameTemplate": "python",
+      "datasourceTemplate": "docker"
     }
   ],
   "vulnerabilityAlerts": {
