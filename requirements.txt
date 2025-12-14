@@ -2,7 +2,7 @@ watchdog==6.0.0
 inotify==0.2.12
 pydub==0.25.1
 mutagen==1.47.0
-fastapi==0.124.0
+fastapi==0.124.4
 httpx==0.28.1
 uvicorn==0.38.0
 pydantic==2.12.5
@@ -14,7 +14,7 @@ xxhash==3.6.0
 
 # Linting and code quality tools
 flake8==7.3.0
-black==25.11.0
+black==25.12.0
 
 # Security scanning tools
 bandit==1.9.2
