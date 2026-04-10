@@ -29,7 +29,7 @@
       "matchUpdateTypes": [
         "patch"
       ],
-      "automerge": true
+      "automerge": false
     },
     {
       "description": "Auto-merge Docker digest updates",
@@ -39,7 +39,7 @@
       "matchUpdateTypes": [
         "digest"
       ],
-      "automerge": true
+      "automerge": false
     },
     {
       "description": "Group Python dependencies",
