@@ -2,7 +2,6 @@
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: [
     "config:recommended",
-    "docker:enableMajor",
     "helpers:pinGitHubActionDigests",
     ":dependencyDashboard",
     ":semanticCommits",
@@ -14,6 +13,4 @@
     "github>DevSecNinja/.github//.renovate/packageRules.json5",
     "github>DevSecNinja/.github//.renovate/semanticCommits.json5",
   ],
-  rangeStrategy: "bump",
-  bumpVersion: "patch",
 }
