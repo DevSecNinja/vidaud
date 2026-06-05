@@ -14,7 +14,7 @@ xxhash==3.7.0
 
 # Linting and code quality tools
 flake8==7.3.0
-black==26.5.0
+black==26.5.1
 
 # Security scanning tools
 bandit==1.9.4
