@@ -10,7 +10,7 @@ pytest==9.1.1
 pytest-asyncio==1.4.0
 pytest-cov==7.1.0
 requests==2.34.2
-xxhash==3.8.0
+xxhash==3.8.1
 
 # Linting and code quality tools
 flake8==7.3.0
