@@ -91,7 +91,7 @@ jobs:
           python -m black --check src/ tests/
 
       - name: Security check with bandit
-        uses: shundor/python-bandit-scan@9cc5aa4a006482b8a7f91134412df6772dbda22c # v1.0
+        uses: DevSecNinja/python-bandit-scan@60a892a79e752ff1b425c6ebac2543a50b06fc6d # v1.0.2
         with:
           path: "src/"
           level: low
