@@ -121,7 +121,7 @@ jobs:
 
       - name: Set lowercase image name
         id: image_name
-        run: echo "value=$(echo ${{ env.IMAGE_NAME }} | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+        run: echo "value=$(echo "${IMAGE_NAME}" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
 
       - name: Log in to Container Registry
         if: github.event_name != 'pull_request'
