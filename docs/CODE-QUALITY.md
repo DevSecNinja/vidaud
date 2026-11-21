@@ -18,20 +18,24 @@ Contains settings for the flake8 linter:
 Contains configuration for multiple Python tools:
 
 #### `[tool.black]` - Code Formatting
+
 - **Target versions**: Python 3.11, 3.12
 - **Line length**: 88 characters
 - **Exclusions**: Build artifacts, virtual environments, dev containers
 
 #### `[tool.pytest.ini_options]` - Testing
+
 - **Test discovery**: Automatic discovery of test files and functions
 - **Markers**: Unit, integration, and slow test categorization
 - **Coverage**: Source code coverage reporting
 
 #### `[tool.bandit]` - Security Scanning
+
 - **Exclusions**: Test directories (tests often contain intentionally insecure code)
 - **Skipped checks**: Assert usage (B101) for test files
 
 #### `[tool.coverage.run]` - Coverage Configuration
+
 - **Source tracking**: Only track `src/` directory
 - **Exclusions**: Test files, cache directories
 
@@ -107,6 +111,7 @@ To modify the configuration:
 4. **Security rules**: Edit `[tool.bandit]` in `pyproject.toml`
 
 Changes will automatically apply to:
+
 - Local development (Makefile commands)
 - VS Code DevContainer environment
 - CI/CD pipeline execution

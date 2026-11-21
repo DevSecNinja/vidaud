@@ -59,18 +59,19 @@ docker run -d \
 
 All configuration is done through environment variables. Here are the most commonly used options:
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `OUTPUT_FORMAT` | `mp3` | Output format: `mp3` or `flac` |
-| `MP3_BITRATE` | `320` | MP3 bitrate in kbps (128, 192, 320) |
-| `FLAC_BIT_DEPTH` | `16` | FLAC bit depth (16, 24) |
-| `MAX_PARALLEL_JOBS` | `4` | Number of concurrent conversion jobs |
-| `SKIP_EXISTING` | `true` | Skip conversion if output file exists |
-| `LOG_LEVEL` | `INFO` | Logging level (DEBUG, INFO, WARN, ERROR) |
+| Variable            | Default | Description                              |
+| ------------------- | ------- | ---------------------------------------- |
+| `OUTPUT_FORMAT`     | `mp3`   | Output format: `mp3` or `flac`           |
+| `MP3_BITRATE`       | `320`   | MP3 bitrate in kbps (128, 192, 320)      |
+| `FLAC_BIT_DEPTH`    | `16`    | FLAC bit depth (16, 24)                  |
+| `MAX_PARALLEL_JOBS` | `4`     | Number of concurrent conversion jobs     |
+| `SKIP_EXISTING`     | `true`  | Skip conversion if output file exists    |
+| `LOG_LEVEL`         | `INFO`  | Logging level (DEBUG, INFO, WARN, ERROR) |
 
 ### Example Configurations
 
 **High-Quality FLAC Output:**
+
 ```bash
 docker run -d \
   --name vidaud-flac \
@@ -83,6 +84,7 @@ docker run -d \
 ```
 
 **Performance Tuning:**
+
 ```bash
 docker run -d \
   --name vidaud-performance \
@@ -100,16 +102,19 @@ docker run -d \
 ## 📊 Monitoring
 
 ### Health Check
+
 ```bash
 curl http://localhost:8080/health
 ```
 
 ### Metrics
+
 ```bash
 curl http://localhost:8080/metrics
 ```
 
 ### Logs
+
 ```bash
 # View container logs
 docker logs vidaud
@@ -136,19 +141,23 @@ The application intelligently extracts metadata from filenames and folder struct
 ### Common Issues
 
 **Permission Errors:**
+
 - Ensure the container user (UID 1000) has write access to output directory
 - Use `sudo chown -R 1000:1000 /your/audio/path`
 
 **No Files Processed:**
+
 - Check that input files are in supported formats
 - Verify files are stable (not being written to)
 - Check logs: `docker logs vidaud`
 
 **High CPU Usage:**
+
 - Reduce `MAX_PARALLEL_JOBS` for lower-end systems
 - Set Docker resource limits: `--cpus="2.0" --memory="2g"`
 
 **Health Check Issues:**
+
 - Ensure port 8080 is accessible
 - Check container status: `docker ps`
 - View detailed logs for error messages

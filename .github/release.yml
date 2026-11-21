@@ -1,3 +1,4 @@
+---
 # Configuration for automatically generated release notes
 # See: https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes
 #
@@ -28,7 +29,7 @@ changelog:
         - enhancement
         - feat
 
-    - title: 🐛 Bug Fixes  
+    - title: 🐛 Bug Fixes
       labels:
         - bug
         - bugfix
@@ -43,8 +44,8 @@ changelog:
       labels:
         - dependencies
         - deps
-      # This will catch Renovate PRs based on the "dependencies" label
-      # configured in renovate.json
+        # This will catch Renovate PRs based on the "dependencies" label
+        # configured in renovate.json
 
     - title: 🔧 Maintenance
       labels:
