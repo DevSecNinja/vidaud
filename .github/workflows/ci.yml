@@ -197,42 +197,44 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
       - name: Create Release
-        uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3 # v3.0.4
-        with:
-          tag_name: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}
-          generate_release_notes: true
-          body: |
-            ## Docker Image
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          notes="$(
+            cat <<'EOF'
+          ## Docker Image
 
-            ```bash
-            docker pull ghcr.io/${{ github.repository }}:${{ github.ref_name }}
-            ```
+          ```bash
+          docker pull ghcr.io/@REPO@:@TAG@
+          ```
 
-            ## Quick Start
+          ## Quick Start
 
-            ```bash
-            # Using Docker
-            docker run -d \
-              --name vidaud \
-              -v /path/to/videos:/input:ro \
-              -v /path/to/audio:/output \
-              -p 8080:8080 \
-              ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+          ```bash
+          # Using Docker
+          docker run -d \
+            --name vidaud \
+            -v /path/to/videos:/input:ro \
+            -v /path/to/audio:/output \
+            -p 8080:8080 \
+            ghcr.io/@REPO@:@TAG@
 
-            # Using Docker Compose
-            curl -O https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/docker-compose.yml
-            docker-compose up -d
-            ```
+          # Using Docker Compose
+          curl -O https://raw.githubusercontent.com/@REPO@/@TAG@/docker-compose.yml
+          docker-compose up -d
+          ```
 
-            ## Health Check
+          ## Health Check
 
-            ```bash
-            curl http://localhost:8080/health
-            ```
-          draft: false
-          prerelease: false
+          ```bash
+          curl http://localhost:8080/health
+          ```
+          EOF
+          )"
+          notes="${notes//@REPO@/${GH_REPO}}"
+          notes="${notes//@TAG@/${TAG}}"
+          # The notes go above the generated ones, as before.
+          gh release create "${TAG}" --verify-tag --title "Release ${TAG}" --notes "${notes}" --generate-notes
