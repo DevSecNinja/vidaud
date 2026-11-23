@@ -202,7 +202,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           TAG: ${{ github.ref_name }}
-        run: |
+        run: |-
           notes="$(
             cat <<'EOF'
           ## Docker Image
@@ -236,5 +236,10 @@ jobs:
           )"
           notes="${notes//@REPO@/${GH_REPO}}"
           notes="${notes//@TAG@/${TAG}}"
+          # A re-run after a successful release leaves the published release as is.
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            echo "Release ${TAG} already exists; nothing to do."
+            exit 0
+          fi
           # The notes go above the generated ones, as before.
           gh release create "${TAG}" --verify-tag --title "Release ${TAG}" --notes "${notes}" --generate-notes
