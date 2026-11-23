@@ -46,7 +46,14 @@ jobs:
       - name: Run unit tests
         run: |
           # Uses pyproject.toml [tool.pytest.ini_options] config automatically
-          python -m pytest tests/ -v --cov=src --cov-report=xml --cov-report=term-missing -m "not integration"
+          python -m pytest tests/ -v --cov=src --cov-report=xml --cov-report=term-missing -m "not integration" --junitxml=test-results.xml
+
+      - name: Publish test results
+        if: always()
+        uses: DevSecNinja/.github/actions/test-report@5452dbd33d61b4fc58b1780f57e0b60ff131be75 # v4.10.0
+        with:
+          paths: test-results.xml
+          title: pytest (Python ${{ matrix.python-version }})
 
       - name: Run integration tests
         run: |
