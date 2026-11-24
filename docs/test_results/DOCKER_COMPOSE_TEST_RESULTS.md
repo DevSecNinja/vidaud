@@ -7,13 +7,15 @@ The vidaud Docker Compose setup has been **successfully tested** and works perfe
 ### 🧪 **Tests Performed**
 
 #### 1. MP3 Conversion Test
+
 - **Configuration**: MP3 output with `dockertest_` prefix
 - **Input**: `wmv1.wmv` and `sample_video.wmv`
 - **Results**: ✅ Both files converted successfully
 - **Output**: High-quality 320kbps MP3 files
 - **Timing**: ~0.2 seconds per file
 
-#### 2. FLAC Conversion Test  
+#### 2. FLAC Conversion Test
+
 - **Configuration**: FLAC output with `flac_` prefix and `_lossless` postfix
 - **Input**: Same video files
 - **Results**: ✅ Both files converted to lossless FLAC
@@ -21,11 +23,13 @@ The vidaud Docker Compose setup has been **successfully tested** and works perfe
 - **Timing**: ~0.17 seconds per file
 
 #### 3. Live Monitoring Test
+
 - **Test**: Added new video file while container running
 - **Results**: ✅ Automatically detected and converted
 - **Detection**: ~6 seconds (stability period: 5 seconds)
 
 #### 4. Health Check Test
+
 - **Health Endpoint**: ✅ `http://localhost:8080/health`
 - **Metrics Endpoint**: ✅ `http://localhost:8080/metrics`
 - **Docker Health**: ✅ Container reports as healthy
@@ -63,16 +67,16 @@ services:
 
 ### 📁 **File Results**
 
-| Input File | MP3 Output | FLAC Output | Status |
-|-----------|------------|-------------|---------|
-| `wmv1.wmv` | `dockertest_wmv1.mp3` (163KB) | `flac_wmv1_lossless.flac` (758KB) | ✅ |
-| `new_video.wmv` | `dockertest_new_video.mp3` (163KB) | `flac_new_video_lossless.flac` (758KB) | ✅ |
+| Input File      | MP3 Output                         | FLAC Output                            | Status |
+| --------------- | ---------------------------------- | -------------------------------------- | ------ |
+| `wmv1.wmv`      | `dockertest_wmv1.mp3` (163KB)      | `flac_wmv1_lossless.flac` (758KB)      | ✅     |
+| `new_video.wmv` | `dockertest_new_video.mp3` (163KB) | `flac_new_video_lossless.flac` (758KB) | ✅     |
 
 ### 🚀 **Performance Metrics**
 
 - **Container Startup**: ~10 seconds to ready
 - **File Detection**: Real-time with inotify
-- **Conversion Speed**: 
+- **Conversion Speed**:
   - MP3: ~0.2s per file
   - FLAC: ~0.17s per file (faster!)
 - **Parallel Processing**: ✅ Multiple files processed simultaneously
@@ -116,8 +120,9 @@ docker-compose down
 ## ✅ **Conclusion**
 
 The vidaud Docker Compose setup is **production-ready** and successfully demonstrates:
+
 - Robust video-to-audio conversion
-- Real-time directory monitoring  
+- Real-time directory monitoring
 - Configurable output formats
 - Health monitoring capabilities
 - Secure containerized deployment

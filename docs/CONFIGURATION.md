@@ -6,27 +6,28 @@ Complete reference for all configuration options available in vidaud.
 
 All configuration is done through environment variables. Below is a comprehensive table of all available options:
 
-| Variable | Type | Default | Description | Example |
-|----------|------|---------|-------------|---------|
-| **INPUT_DIR** | Path | `/input` | Directory to monitor for video files | `/mnt/videos` |
-| **OUTPUT_DIR** | Path | `/output` | Directory for converted audio files | `/mnt/audio` |
-| **OUTPUT_FORMAT** | String | `mp3` | Output audio format | `mp3`, `flac` |
-| **FILENAME_PREFIX** | String | `` | Prefix added to all output filenames | `converted_` |
-| **FILENAME_POSTFIX** | String | `` | Postfix added to all output filenames | `_processed` |
-| **MP3_BITRATE** | Integer | `320` | MP3 bitrate in kbps | `128`, `192`, `320` |
-| **FLAC_BIT_DEPTH** | Integer | `16` | FLAC bit depth | `16`, `24` |
-| **SKIP_EXISTING** | Boolean | `true` | Skip conversion if output file exists | `true`, `false` |
-| **MAX_PARALLEL_JOBS** | Integer | `4` | Number of concurrent conversion jobs | `1`, `8`, `16` |
-| **STABILITY_PERIOD_SECONDS** | Integer | `30` | Wait time before processing new files | `10`, `60`, `120` |
-| **MAX_RETRIES** | Integer | `3` | Number of retry attempts for failed conversions | `1`, `5`, `10` |
-| **RETRY_DELAY_SECONDS** | Integer | `60` | Base delay between retry attempts | `30`, `120`, `300` |
-| **POLLING_INTERVAL_SECONDS** | Integer | `10` | Interval for checking pending files | `5`, `15`, `30` |
-| **LOG_LEVEL** | String | `INFO` | Logging verbosity level | `DEBUG`, `INFO`, `WARN`, `ERROR` |
-| **HEALTH_PORT** | Integer | `8080` | Port for health check endpoint | `8080`, `9000` |
+| Variable                     | Type    | Default   | Description                                     | Example                          |
+| ---------------------------- | ------- | --------- | ----------------------------------------------- | -------------------------------- |
+| **INPUT_DIR**                | Path    | `/input`  | Directory to monitor for video files            | `/mnt/videos`                    |
+| **OUTPUT_DIR**               | Path    | `/output` | Directory for converted audio files             | `/mnt/audio`                     |
+| **OUTPUT_FORMAT**            | String  | `mp3`     | Output audio format                             | `mp3`, `flac`                    |
+| **FILENAME_PREFIX**          | String  | ``        | Prefix added to all output filenames            | `converted_`                     |
+| **FILENAME_POSTFIX**         | String  | ``        | Postfix added to all output filenames           | `_processed`                     |
+| **MP3_BITRATE**              | Integer | `320`     | MP3 bitrate in kbps                             | `128`, `192`, `320`              |
+| **FLAC_BIT_DEPTH**           | Integer | `16`      | FLAC bit depth                                  | `16`, `24`                       |
+| **SKIP_EXISTING**            | Boolean | `true`    | Skip conversion if output file exists           | `true`, `false`                  |
+| **MAX_PARALLEL_JOBS**        | Integer | `4`       | Number of concurrent conversion jobs            | `1`, `8`, `16`                   |
+| **STABILITY_PERIOD_SECONDS** | Integer | `30`      | Wait time before processing new files           | `10`, `60`, `120`                |
+| **MAX_RETRIES**              | Integer | `3`       | Number of retry attempts for failed conversions | `1`, `5`, `10`                   |
+| **RETRY_DELAY_SECONDS**      | Integer | `60`      | Base delay between retry attempts               | `30`, `120`, `300`               |
+| **POLLING_INTERVAL_SECONDS** | Integer | `10`      | Interval for checking pending files             | `5`, `15`, `30`                  |
+| **LOG_LEVEL**                | String  | `INFO`    | Logging verbosity level                         | `DEBUG`, `INFO`, `WARN`, `ERROR` |
+| **HEALTH_PORT**              | Integer | `8080`    | Port for health check endpoint                  | `8080`, `9000`                   |
 
 ## Docker Run Examples
 
 ### Basic Usage
+
 ```bash
 docker run -d \
   --name vidaud \
@@ -36,6 +37,7 @@ docker run -d \
 ```
 
 ### High-Quality FLAC Output
+
 ```bash
 docker run -d \
   --name vidaud-flac \
@@ -48,6 +50,7 @@ docker run -d \
 ```
 
 ### Performance Tuning
+
 ```bash
 docker run -d \
   --name vidaud-performance \
@@ -62,6 +65,7 @@ docker run -d \
 ```
 
 ### Debug Configuration
+
 ```bash
 docker run -d \
   --name vidaud-debug \
@@ -76,6 +80,7 @@ docker run -d \
 ## Docker Compose Configuration
 
 ### Basic Setup
+
 ```yaml
 services:
   vidaud:
@@ -93,6 +98,7 @@ services:
 ```
 
 ### Advanced Configuration
+
 ```yaml
 services:
   vidaud:
@@ -138,6 +144,7 @@ services:
 ### File Format Support
 
 **Input Formats:**
+
 - MKV (Matroska Video)
 - WebM (Web Media)
 - MP4 (MPEG-4)
@@ -146,6 +153,7 @@ services:
 - WMV (Windows Media Video)
 
 **Output Formats:**
+
 - **MP3**: Lossy compression, Plex-compatible
   - Bitrates: 128, 192, 256, 320 kbps
   - Sample rate: 44.1 kHz
@@ -158,18 +166,22 @@ services:
 ### Performance Guidelines
 
 **CPU-bound workloads:**
+
 - Set `MAX_PARALLEL_JOBS` to match CPU cores
 - Higher values may cause system overload
 
 **I/O-bound workloads:**
+
 - Increase `MAX_PARALLEL_JOBS` beyond CPU cores
 - Consider storage speed and network latency
 
 **Memory considerations:**
+
 - Each job uses ~100-500MB depending on file size
 - Monitor memory usage with multiple jobs
 
 **Storage optimization:**
+
 - Use `SKIP_EXISTING=true` to avoid reprocessing
 - Consider separate volumes for input and output
 
@@ -186,6 +198,7 @@ The application implements exponential backoff for failed conversions:
 ### Health Monitoring
 
 **Health endpoint**: `http://localhost:8080/health`
+
 ```json
 {
   "status": "healthy",
@@ -196,6 +209,7 @@ The application implements exponential backoff for failed conversions:
 ```
 
 **Metrics endpoint**: `http://localhost:8080/metrics`
+
 ```json
 {
   "files_processed": 42,
@@ -216,12 +230,14 @@ The application implements exponential backoff for failed conversions:
 ### Troubleshooting Configuration
 
 **High CPU usage:**
+
 ```bash
 # Reduce parallel jobs
 -e MAX_PARALLEL_JOBS=2
 ```
 
 **Slow processing:**
+
 ```bash
 # Increase parallel jobs (if system can handle it)
 -e MAX_PARALLEL_JOBS=8
@@ -230,6 +246,7 @@ The application implements exponential backoff for failed conversions:
 ```
 
 **Memory issues:**
+
 ```bash
 # Reduce parallel jobs
 -e MAX_PARALLEL_JOBS=1
@@ -238,6 +255,7 @@ The application implements exponential backoff for failed conversions:
 ```
 
 **File detection issues:**
+
 ```bash
 # Increase polling frequency
 -e POLLING_INTERVAL_SECONDS=5
@@ -246,6 +264,7 @@ The application implements exponential backoff for failed conversions:
 ```
 
 **Network errors (for integration tests):**
+
 ```bash
 # Increase retry settings
 -e MAX_RETRIES=10
