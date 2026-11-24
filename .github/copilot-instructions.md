@@ -5,6 +5,7 @@ Always reference these instructions first and fallback to search or bash command
 ## Working Effectively
 
 ### Bootstrap, Build, and Test Process
+
 - **Install system dependencies (REQUIRED):**
   - `sudo apt-get update && sudo apt-get install -y ffmpeg` -- takes 3 minutes. NEVER CANCEL. Set timeout to 5+ minutes.
 - **Setup repository:**
@@ -19,6 +20,7 @@ Always reference these instructions first and fallback to search or bash command
   - `make security` -- takes 5 seconds. Runs bandit security scanner.
 
 ### Run the Application
+
 - **Development mode (RECOMMENDED):**
   ```bash
   # Set environment variables explicitly (required)
@@ -34,6 +36,7 @@ Always reference these instructions first and fallback to search or bash command
   - Use development mode instead when Docker build fails
 
 ### Validation Scenarios
+
 - **ALWAYS test video conversion after making changes:**
   1. Start the application in development mode with proper environment variables
   2. Create a test video: `ffmpeg -f lavfi -i testsrc=duration=5:size=320x240:rate=1 -f lavfi -i sine=frequency=1000:duration=5 -c:v libx264 -c:a aac -shortest test_input/sample.mp4 -y`
@@ -47,27 +50,32 @@ Always reference these instructions first and fallback to search or bash command
 ## Known Limitations and Workarounds
 
 ### Docker Build Issues
+
 - **Problem:** `make build` fails with SSL certificate verification errors in sandboxed environments
 - **Workaround:** Use development mode instead: `INPUT_DIR=./test_input OUTPUT_DIR=./test_output PYTHONPATH=. python main.py`
 - **Note:** This is a known limitation of network-restricted environments, not a code issue
 
 ### Environment Configuration
+
 - **Problem:** `make dev` fails because .env file is not automatically loaded
 - **Workaround:** Set environment variables explicitly when running Python directly
 - **Required variables:** `INPUT_DIR`, `OUTPUT_DIR`, `PYTHONPATH=.`
 
 ### Integration Tests
+
 - **Problem:** Integration tests are skipped due to network access requirements
 - **Expected:** Tests download sample files from samples.ffmpeg.org
 - **Workaround:** Unit tests provide sufficient coverage for development
 
 ### Directory Permissions
+
 - **Problem:** Permission denied errors for test directories
 - **Fix:** Run `sudo chown -R $(whoami):$(id -gn) test_input test_output` to fix ownership
 
 ## Common Tasks
 
 ### Make All Tests Pass
+
 ```bash
 # Install dependencies if not done
 sudo apt-get update && sudo apt-get install -y ffmpeg  # 3 min timeout
@@ -82,6 +90,7 @@ make security  # 5 seconds
 ```
 
 ### Test Video Conversion Functionality
+
 ```bash
 # Start application (in separate terminal/session)
 INPUT_DIR=./test_input OUTPUT_DIR=./test_output PYTHONPATH=. python main.py
@@ -99,6 +108,7 @@ make health
 ```
 
 ### Debug Application Issues
+
 ```bash
 # Run with debug logging
 LOG_LEVEL=DEBUG INPUT_DIR=./test_input OUTPUT_DIR=./test_output PYTHONPATH=. python main.py
@@ -111,6 +121,7 @@ curl http://localhost:8080/metrics | python3 -m json.tool
 ## Repository Structure
 
 ### Key Files and Directories
+
 ```
 vidaud/
 ├── src/                    # Main application code
@@ -129,6 +140,7 @@ vidaud/
 ```
 
 ### Frequently Used Commands (from Makefile)
+
 ```bash
 make help          # Show all available commands
 make setup         # Initial project setup (fast)
@@ -144,6 +156,7 @@ make clean         # Clean up Docker resources
 ## Configuration Reference
 
 ### Environment Variables (Required for Development)
+
 - `INPUT_DIR=./test_input` -- Directory to monitor for video files
 - `OUTPUT_DIR=./test_output` -- Directory for converted audio files
 - `PYTHONPATH=.` -- Required for Python module imports
@@ -152,22 +165,26 @@ make clean         # Clean up Docker resources
 - `MAX_PARALLEL_JOBS=4` -- Optional: Concurrent conversion jobs
 
 ### Supported Video Formats
+
 - **Input:** MKV, WebM, MP4, AVI, MOV, WMV
 - **Output:** MP3 (320kbps, 44.1kHz) or FLAC (lossless)
 
 ### Health Endpoints
+
 - `http://localhost:8080/health` -- Application health status
 - `http://localhost:8080/metrics` -- Processing metrics and statistics
 
 ## CI/CD Pipeline (.github/workflows/ci.yml)
 
 The automated pipeline runs:
+
 1. **Tests** on Python 3.11 and 3.12 (unit + integration)
 2. **Quality checks** (flake8, black, bandit security scan)
 3. **Docker build** for AMD64 and ARM64 architectures
 4. **Release** automation with GitHub releases
 
 ### Workflow triggers:
+
 - Push to `main` or `feature/*` branches
 - Pull requests to `main`
 - Version tags (`v*`) trigger releases

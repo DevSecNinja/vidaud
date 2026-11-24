@@ -97,6 +97,7 @@ open htmlcov/index.html
 ### Test Results
 
 All 17 tests pass successfully:
+
 - ✅ Unit tests: Configuration, conversion logic, monitoring
 - ✅ Integration tests: Real video file conversion with FFmpeg samples
 - ✅ Docker tests: Container functionality and health checks
