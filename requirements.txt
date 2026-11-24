@@ -5,15 +5,15 @@ mutagen==1.48.1
 fastapi==0.162.0
 httpx==0.28.1
 uvicorn==0.54.0
-pydantic==2.14.1
-pytest==9.1.1
-pytest-asyncio==1.4.0
+pydantic==2.14.3
+pytest==9.2.0
+pytest-asyncio==1.4.1.post1
 pytest-cov==7.1.0
 requests==2.34.2
 xxhash==3.8.2
 
 # Linting and code quality tools
-flake8==7.4.1
+flake8==7.5.0
 black==26.10.1
 
 # Security scanning tools
